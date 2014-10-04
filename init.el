@@ -156,14 +156,12 @@
                                   (sphinx-doc-mode t)))
 
 
-; code coverage
-;(load-file "/home/goneri/.emacs.d/modules/pycoverage.el/pycov2.el")
-;(require 'linum)
-;(require 'pycov2)
-;(add-hook 'python-mode-hook
-;          (function (lambda ()
-;                      (pycov2-mode)
-;                      (linum-mode))))
+(add-hook 'prog-mode-hook (lambda ()
+			    (setq whitespace-style '(face trailing lines-tail tabs))
+(setq whitespace-line-column 80)
+(whitespace-mode t)))
+;	(setq-default whitespace-style '(face trailing lines empty indentation::space))
+;	(setq-default whitespace-line-column 80)
 
 ; trailing white spaces
 ; http://www.emacswiki.org/emacs/ShowWhiteSpace
@@ -203,11 +201,6 @@
   (interactive (list (read-from-minibuffer "Search string: " (ag/dwim-at-point))))
   (do-in-root '(lambda (root) (ag/search string root))))
 ; end https://github.com/ymln/dotfiles/blob/master/.emacs
-
-; trailing whitespaces
-(require 'highlight-chars)
-(add-hook 'prog-mode-hook 'hc-toggle-highlight-trailing-whitespace)
-(add-hook 'prog-mode-hook 'hc-highlight-tabs)
 
 ; cperl
 (defalias 'perl-mode 'cperl-mode)
@@ -523,8 +516,9 @@
 ;(elpy-enable)
 
 ; Menlo 10
-(set-default-font "Menlo 10") ;;; set default font
-(setq default-frame-alist '((font . "Menlo 10"))) ;;; set default font for emacs --daemon / ema
+;(set-default-font "Menlo 10") ;;; set default font
+;(setq default-frame-alist '((font . "Menlo 10"))) ;;; set default font for emacs --daemon / ema
+(set-default-font "Fantasque Sans Mono-12")
 
 ;;;Gonéri(custom-set-faces
 ;;;Gonéri ;; custom-set-faces was added by Custom.
@@ -536,15 +530,14 @@
 ;;;Gonéri '(highlight-indentation-face ((t (:background "snow2"))) t))
 
 
+(undo-tree-mode 1)
+(global-undo-tree-mode)
+
+; TODO, conflict with windmove
+;(drag-stuff-mode t)
+
 ; http://www.emacswiki.org/emacs/WindMove
 (windmove-default-keybindings 'meta)
-
-(undo-tree-mode 1)
-
-;(require 'tabbar)
-;(tabbar-mode)
-
-(drag-stuff-mode t)
 
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -553,11 +546,32 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background nil))))
+ '(default ((t (:background nil :family "Fantasque Sans Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
  '(highlight-indentation-current-column-face ((t (:background "pink1"))) t)
  '(highlight-indentation-face ((t (:background "snow2"))) t)
  '(notmuch-crypto-part-header ((t (:foreground "burlywood"))))
  '(notmuch-message-summary-face ((t (:background "pink"))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#7f8c8d")))))
+
+; http://superuser.com/questions/555034/double-mouse-1-selects-text-and-symbol-in-emacs
+(modify-syntax-entry ?_ "w")
+
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"                 ;; personal snippets
+))
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+(yas-global-mode 1)
+
+; http://stackoverflow.com/questions/3072648/cucumbers-ansi-colors-messing-up-emacs-compilation-buffer
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
 
 (provide '.emacs)
