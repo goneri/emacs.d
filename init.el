@@ -173,7 +173,6 @@
   (projectile-global-mode))
 
 (use-package helm-swoop
-  :bind ("s-f" . helm-swoop)
   :config
   (bind-key "s-f" #'helm-swoop-from-isearch isearch-mode-map)
   (bind-key "s-f" #'helm-multi-swoop-all-from-helm-swoop helm-swoop-map)
