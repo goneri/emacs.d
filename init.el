@@ -129,9 +129,7 @@
 
 (use-package rainbow-delimiters
   :init
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-  (hook-modes progish-modes
-    (rainbow-delimiters-mode)))
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 (use-package powerline
   :init (powerline-default-theme)
