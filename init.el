@@ -1,61 +1,244 @@
-;;; package --- Summar
+;; package --- Summar
+
+(setq load-prefer-newer t)
+
+(require 'cask "/home/goneri/.cask/cask.el")
+(cask-initialize)
+(require 'use-package)
+
+(require 'package)
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+
+(use-package elpy)
+(elpy-enable)
+; preserve the windmove binding
+(eval-after-load "elpy"
+  '(cl-dolist (key '("M-<up>" "M-<down>" "M-<left>" "M-<right>"))
+     (define-key elpy-mode-map (kbd key) nil)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ack-and-a-half-arguments (quote ("--ignore-dir .tox --ignore-dir build --ignore-dir .testrepository")))
- '(ansi-color-names-vector ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
+ '(ack-and-a-half-arguments
+   (quote
+    ("--ignore-dir .tox --ignore-dir build --ignore-dir .testrepository")))
+ '(ansi-term-color-vector
+   [unspecified "#1F1611" "#660000" "#144212" "#EFC232" "#5798AE" "#BE73FD" "#93C1BC" "#E6E1DC"])
  '(bmkp-last-as-first-bookmark-file "/home/goneri/.emacs.d/bookmarks")
  '(compilation-scroll-output (quote first-error))
- '(custom-safe-themes (quote ("45bd43da80a95b4f5157b1992350eb4207025bdeefb55c68548dcb34bf403124" "0d19ff470ad7029d2e1528b3472ca2d58d0182e279b9ab8acd65e2508845d2b6" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" "0521e8bea7954b4d42e9b68390be2a6d4549d15a3f47b391b8c870766f520cf7" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "8b231ba3e5f61c2bb1bc3a2d84cbd16ea17ca13395653566d4dfbb11feaf8567" "297063d0000ca904abb446944398843edaa7ef2c659b7f9087d724bf6f8c1d1f" "97a2b10275e3e5c67f46ddaac0ec7969aeb35068c03ec4157cf4887c401e74b1" "65ae93029a583d69a3781b26044601e85e2d32be8f525988e196ba2cb644ce6a" "bc89fda3d232a3daa4eb3a9f87d6ffe1272fea46e4cf86686d9e8078e4209e2c" "71b42addab167732ebef0aa9aed1a310c6db65090a16182f8fcec2301df1880f" "c2cfe2f1440d9ef4bfd3ef4cf15bfe35ff40e6d431264b1e24af64f145cffb11" "7694bfb46ec19cfc47093783633d8cd4df208d620104910bf5c1c840528a8dd1" "75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "93e458ab36b4d904c2e485944d0e1b4d4ad879d83bb6ca5c19a9dac7f6549ee5" "ea97033435e26d4742c0d88de2238ac8d1cb9e6df5eb9a73324382fcefa7118a" "f3b6091bc26ab76c4ba9814685e001f37d0801ee46fd8912026192ffbe832842" "50edb7914e8d369bc03820d2dcde7e74b7efe2af5a39511d3a130508e2f6ac8f" default)))
+ '(custom-safe-themes
+   (quote
+    ("0795e2c85394140788d72d34969be4acb305e4a54149e7237787d9df27832fbb" "6d78a562789b1c1e58d2fd7dcadbc1c88012584ec678f85817a451d4d7b370f0" "1ef7df153ee59ef210acf0060073cd98e4992c9014b4fc7766243a3cb56cc6e4" "255de8fde9647c6a0fbd0c9877ee02b612f8ed3cf5c78162b83ee68dfef05952" "454dc6f3a1e9e062f34c0f988bcef5d898146edc5df4aa666bf5c30bed2ada2e" "96efbabfb6516f7375cdf85e7781fe7b7249b6e8114676d65337a1ffe78b78d9" "c4e6fe8f5728a5d5fd0e92538f68c3b4e8b218bcfb5e07d8afff8731cc5f3df0" "e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "013e87003e1e965d8ad78ee5b8927e743f940c7679959149bbee9a15bd286689" "28ea856c2f85b4a908fe72e3dea5e28254b969b93cbe88e7cad1ed2fd19b53a1" "45bd43da80a95b4f5157b1992350eb4207025bdeefb55c68548dcb34bf403124" "0d19ff470ad7029d2e1528b3472ca2d58d0182e279b9ab8acd65e2508845d2b6" "3b819bba57a676edf6e4881bd38c777f96d1aa3b3b5bc21d8266fa5b0d0f1ebf" "0521e8bea7954b4d42e9b68390be2a6d4549d15a3f47b391b8c870766f520cf7" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "8b231ba3e5f61c2bb1bc3a2d84cbd16ea17ca13395653566d4dfbb11feaf8567" "297063d0000ca904abb446944398843edaa7ef2c659b7f9087d724bf6f8c1d1f" "97a2b10275e3e5c67f46ddaac0ec7969aeb35068c03ec4157cf4887c401e74b1" "65ae93029a583d69a3781b26044601e85e2d32be8f525988e196ba2cb644ce6a" "bc89fda3d232a3daa4eb3a9f87d6ffe1272fea46e4cf86686d9e8078e4209e2c" "71b42addab167732ebef0aa9aed1a310c6db65090a16182f8fcec2301df1880f" "c2cfe2f1440d9ef4bfd3ef4cf15bfe35ff40e6d431264b1e24af64f145cffb11" "7694bfb46ec19cfc47093783633d8cd4df208d620104910bf5c1c840528a8dd1" "75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "93e458ab36b4d904c2e485944d0e1b4d4ad879d83bb6ca5c19a9dac7f6549ee5" "ea97033435e26d4742c0d88de2238ac8d1cb9e6df5eb9a73324382fcefa7118a" "f3b6091bc26ab76c4ba9814685e001f37d0801ee46fd8912026192ffbe832842" "50edb7914e8d369bc03820d2dcde7e74b7efe2af5a39511d3a130508e2f6ac8f" default)))
  '(debian-changelog-mailing-address "goneri@debian.org")
- '(elfeed-feeds (quote ("http://planet.emacsen.org/atom.xml" "http://www.bortzmeyer.org/feed-full.atom" "http://www.nenuial.org/feed/atom" "http://www.coriolys.org/feed/rss2" "http://frikodisul.net/feed/rss2")))
- '(global-rainbow-delimiters-mode t)
+ '(diary-entry-marker (quote font-lock-variable-name-face))
+ '(elfeed-feeds
+   (quote
+    ("http://planet.emacsen.org/atom.xml" "http://www.bortzmeyer.org/feed-full.atom" "http://www.nenuial.org/feed/atom" "http://www.coriolys.org/feed/rss2" "http://frikodisul.net/feed/rss2")))
+ '(elpy-modules
+   (quote
+    (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-sane-defaults)))
+ '(highlight-symbol-colors
+   (quote
+    ("#EFFF00" "#73CD4F" "#83DDFF" "MediumPurple1" "#66CDAA" "DarkOrange" "HotPink1" "#809FFF" "#ADFF2F")))
+ '(hl-paren-background-colors
+   (quote
+    ("#00FF99" "#CCFF99" "#FFCC99" "#FF9999" "#FF99CC" "#CC99FF" "#9999FF" "#99CCFF" "#99FFCC" "#7FFF00")))
+ '(hl-paren-colors (quote ("#326B6B")))
  '(inhibit-startup-screen t)
+ '(ispell-dictionary "francais")
+ '(linum-format " %7d ")
  '(notmuch-always-prompt-for-sender t)
  '(notmuch-crypto-process-mime t)
- '(notmuch-identities (quote ("Gonéri Le Bouder <goneri@lebouder.net>" "Gonéri Le Bouder <goneri@debian.org>" "Gonéri Le Bouder <goneri.lebouder@enovance.com>")))
- '(notmuch-saved-searches (quote ((:name "[enovance] inbox" :query "tag:inbox and not tag:delete and folder:enovance and not tag:killed") (:name "[enovance] archive" :query "tag:archive and folder:enovance") (:name "[Red Hat] inbox" :query "tag:inbox and not tag:delete and folder:redhat and not tag:killed") (:name "[Red Hat] archive" :query "tag:archive and folder:redhat and not tag:memo") (:name "[Red Hat] memo" :query "tag:memo and not tag:delete and not tag:archive and not tag:killed") (:name "[perso] inbox" :query "tag:inbox and not tag:delete not folder:enovance and not folder:redhat and not tag:killed") (:name "[perso] archive" :query "tag:archive and not folder:enovance and not folder:redhat") (:name "new" :query "tag:new") (:name "last" :query "date:yesterday..today") (:name "sent" :query "from:goneri" :count-query "300"))))
+ '(notmuch-saved-searches
+   (quote
+    ((:name "[enovance] inbox" :query "tag:inbox and not tag:delete and folder:enovance and not tag:killed")
+     (:name "[enovance] archive" :query "tag:archive and folder:enovance")
+     (:name "[Red Hat] inbox" :query "tag:inbox and not tag:delete and folder:redhat and not tag:killed")
+     (:name "[Red Hat] archive" :query "tag:archive and folder:redhat and not tag:memo")
+     (:name "[Red Hat] memo" :query "tag:memo and not tag:delete and not tag:archive and not tag:killed")
+     (:name "[perso] inbox" :query "tag:inbox and not tag:delete not folder:enovance and not folder:redhat and not tag:killed")
+     (:name "[perso] archive" :query "tag:archive and not folder:enovance and not folder:redhat")
+     (:name "new" :query "tag:new")
+     (:name "last" :query "date:yesterday..today")
+     (:name "sent" :query "from:goneri" :count-query "300")
+     (:name "follow" :query "tag:follow" :count-query "500"))))
  '(notmuch-search-oldest-first nil)
- '(nyan-mode t)
- '(projectile-globally-ignored-directories (quote (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" ".tox")))
+ '(projectile-globally-ignored-directories
+   (quote
+    (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" ".tox")))
  '(pyenv-mode t)
- '(rainbow-delimiters-ignore-modes (quote (special-mode eshell-mode notmuch-mode)))
+ '(rst-compile-toolsets
+   (quote
+    ((html "rst2html-with-preview" ".html" nil)
+     (latex "rst2latex" ".tex" nil)
+     (newlatex "rst2newlatex" ".tex" nil)
+     (pseudoxml "rst2pseudoxml" ".xml" nil)
+     (xml "rst2xml" ".xml" nil)
+     (pdf "rst2pdf" ".pdf" nil)
+     (s5 "rst2s5" ".html" nil))))
  '(send-mail-function (quote sendmail-send-it))
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(vc-annotate-background "#f6f0e1")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#e43838")
+     (40 . "#f71010")
+     (60 . "#ab9c3a")
+     (80 . "#9ca30b")
+     (100 . "#ef8300")
+     (120 . "#958323")
+     (140 . "#1c9e28")
+     (160 . "#3cb368")
+     (180 . "#028902")
+     (200 . "#008b45")
+     (220 . "#077707")
+     (240 . "#259ea2")
+     (260 . "#358d8d")
+     (280 . "#0eaeae")
+     (300 . "#2c53ca")
+     (320 . "#0000ff")
+     (340 . "#0505cc")
+     (360 . "#a020f0"))))
+ '(vc-annotate-very-old-color "#a020f0"))
 
-(setq browse-url-browser-function 'browse-url-generic
-;          browse-url-generic-program "google-chrome")
-          browse-url-generic-program "/usr/bin/firefox")
+
+
+
+(use-package pallet :init (pallet-mode))
+
+;elpy(use-package frame
+;elpy  :init (toggle-frame-fullscreen)
+;elpy  :config (setq blink-cursor-blinks 0))
+
+;fout-la-merge(use-package highlight-symbol
+;fout-la-merge  :init
+;fout-la-merge  (hook-modes progish-modes
+;fout-la-merge    (highlight-symbol-mode)
+;fout-la-merge    (highlight-symbol-nav-mode))
+;fout-la-merge  :config (setq highlight-symbol-idle-delay 0))
+
+;(use-package volatile-highlights
+;  :init (volatile-highlights-mode))
+
+(use-package rainbow-mode
+  :init
+  (add-hook 'prog-mode-hook (rainbow-mode 1))
+)
+
+(use-package rainbow-delimiters
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  (hook-modes progish-modes
+    (rainbow-delimiters-mode)))
+
+(use-package powerline
+  :init (powerline-default-theme)
+  :config
+  (setq powerline-default-separator 'utf-8))
+
+(use-package faces
+  :init (set-face-attribute 'default nil :height 150 :font "Menlo"))
+
+(use-package ag
+  :config
+  (setq ag-reuse-buffers t
+        ag-highlight-search t))
+
+;;;;; Navigation & Search
+
+(use-package anzu
+  :bind (("s-q" . anzu-query-replace))
+  :init (global-anzu-mode))
+
+(use-package imenu
+  :init
+  (use-package imenu-anywhere
+    :bind (("s-r" . imenu-anywhere)))
+  (setq imenu-auto-rescan t))
+
+(use-package ace-jump-buffer
+  :init
+  (make-ace-jump-buffer-function "shellish"
+    (with-current-buffer buffer
+      (not (derived-mode-p 'comint-mode))))
+  :config
+  (setq ajb-home-row-keys t))
+
+(use-package projectile
+  :bind-keymap (("s-O" . projectile-command-map))
+  :idle (projectile-cleanup-known-projects)
+  :config
+  (setq projectile-enable-caching t
+        projectile-tags-command "ripper-tags -R -f TAGS")
+  :init
+  (projectile-global-mode)
+  (use-package projectile-rails
+    :init (add-hook 'projectile-mode-hook #'projectile-rails-on)))
+
+(use-package helm-swoop
+  :bind ("s-f" . helm-swoop)
+  :config
+  (bind-key "s-f" #'helm-swoop-from-isearch isearch-mode-map)
+  (bind-key "s-f" #'helm-multi-swoop-all-from-helm-swoop helm-swoop-map)
+  (setq helm-swoop-speed-or-color t
+        helm-multi-swoop-edit-save t
+        helm-swoop-use-line-number-face t
+        helm-swoop-pre-input-function (lambda ())))
+
+(use-package smex
+  :bind (([remap execute-extended-command] . smex)
+         ("s-P" . smex))
+  :init
+  (smex-initialize)
+  (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory)))
+
+(use-package flycheck
+  :commands global-flycheck-mode
+  :idle (global-flycheck-mode 1)
+  :config (setq-default flycheck-disabled-checkers '(html-tidy notmuch emacs-lisp-checkdoc)))
+
+
+(use-package puppet-mode
+  :mode (("\\.pp$" . puppet-mode)))
+
+(use-package enh-ruby-mode
+  :mode (("\\.rake$" . enh-ruby-mode)
+         ("\\.gemspec$" . enh-ruby-mode)
+         ("\\.ru$" . enh-ruby-mode)
+         ("Rakefile$" . enh-ruby-mode)
+         ("Gemfile$" . enh-ruby-mode)
+         ("Capfile$" . enh-ruby-mode)
+         ("Puppetfile$" . enh-ruby-mode)
+         ("Guardfile$" . enh-ruby-mode))
+  :init
+  (progn
+    (add-hook 'enh-ruby-mode-hook 'robe-mode)
+    (add-hook 'robe-mode-hook 'ac-robe-setup)))
+
+(setq load-prefer-newer t)
+(use-package auto-compile)
+(auto-compile-on-load-mode 1)
+
+(setq browse-url-generic-program (executable-find "firefox")
+          browse-url-browser-function 'browse-url-generic)
 
 (scroll-bar-mode 0)
 (blink-cursor-mode 0)
-;(desktop-save-mode 1)
-
-(require 'package)
-(add-to-list 'package-archives
-                          '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-      (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize)
-
-
-;;(menu-bar-mode -1)
 (tool-bar-mode -1)
 
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+;;;;(use-package flx-ido)
+;;;;(ido-mode 1)
+;;;;(ido-everywhere 1)
+;;;;(flx-ido-mode 1)
+;;;;;; disable ido faces to see flx highlights.
+;;;;(setq ido-enable-flex-matching t)
+;;;;(setq ido-use-faces nil)
 
 ;(add-to-list 'load-path "/home/goneri/notmuch/emacs")
 
-(require 'notmuch)
+(use-package notmuch)
 ; (autoload 'notmuch "notmuch" nil t)
 ;(autoload 'notmuch-search "notmuch" nil t)
 ;(autoload 'notmuch-hello "notmuch-hello" nil t)
@@ -65,7 +248,7 @@
 ;; Sign messages by default.
     (add-hook 'message-setup-hook 'mml-secure-sign-pgpmime)
 ;; http://www.guru-group.fi/~too/nottoomuch/nottoomuch-addresses/
-(require 'notmuch-address)
+(use-package notmuch-address)
 (setq notmuch-address-command "/home/goneri/nottoomuch/nottoomuch-addresses.sh")
 (notmuch-address-message-insinuate)
 
@@ -124,16 +307,13 @@
   (notmuch-tree-tag-thread '("+seen" "-inbox" "-unread")))
 (define-key notmuch-tree-mode-map "S" 'notmuch-tree-tag-seen)
 
-; Jedi
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)                 ; optional
 
 ; Addr
 (setq user-mail-address "goneri@lebouder.net")
 (setq user-full-name "Gonéri Le Bouder")
 
 ; gnus
-(require 'gnus)
+(use-package gnus)
 (setq nnml-directory "~/gnus-mail")
 (setq message-directory "~/gnus-mail")
 
@@ -143,21 +323,14 @@
                (nnimap-server-port 993)
                (nnimap-stream ssl)))
 
-; flymake
-(require 'flymake-python-pyflakes)
-(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(setq flymake-python-pyflakes-extra-arguments '("--ignore=C0325"))
-(setq flymake-python-pyflakes-executable "flake8")
-
 ; https://github.com/naiquevin/sphinx-doc.el/blob/master/README.md
-(add-hook 'python-mode-hook (lambda ()
-                                  (require 'sphinx-doc)
-                                  (sphinx-doc-mode t)))
+;(add-hook 'python-mode-hook (lambda ()
+;                                  (use-package sphinx-doc)
+;                                  (sphinx-doc-mode t)))
 
 
 (add-hook 'prog-mode-hook (lambda ()
-			    (setq whitespace-style '(face trailing lines-tail tabs))
+			    (setq whitespace-style '(face trailing lines-tail tabs space-before-tab))
 (setq whitespace-line-column 80)
 (whitespace-mode t)))
 ;	(setq-default whitespace-style '(face trailing lines empty indentation::space))
@@ -170,7 +343,7 @@
 ;(add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
 
 ; evil
-;(require 'evil)
+;(use-package evil)
 ;(evil-mode 1)
 ;(evil-set-initial-state 'elfeed-search 'emacs)
 ;(evil-set-initial-state 'elfeed-search-mode 'emacs)
@@ -179,17 +352,9 @@
 ; http://ergoemacs.org/emacs/emacs_buffer_management.html
 ; (defalias 'list-buffers 'ibuffer)
 
-;; Target Redmine URI
-;;   eg. Redmine Project
-(require 'org-redmine)
-(setq org-redmine-uri "http://redmine.sf.ring.enovance.com")
-(setq org-redmine-auth-api-key "0609e77684befb8879027e5222476550fbe7a308")
-(setq org-redmine-auth-username "goneri.lebouder")
-;(setq org-redmine-auth-password "abc")
-(setq org-redmine-template-header "[%p_n%] http://redmine.sf.ring.enovance.com/issues/%i% %s% by %as_n%")
 
 ; https://github.com/ymln/dotfiles/blob/master/.emacs
-(require 'helm-ag)
+(use-package helm-ag)
 (defun do-in-root (f)
   (if (projectile-project-p)
     (funcall f (projectile-project-root))
@@ -207,7 +372,7 @@
 (setq cperl-indent-level 4)
 
 ; Projectile
-(require 'projectile)
+(use-package projectile)
 (projectile-global-mode) ;; to enable in all buffers
 
 
@@ -224,39 +389,52 @@
 (global-set-key (kbd "C-c i") 'helm-imenu)
 (setq projectile-completion-system 'ido)
 ;(setq projectile-completion-system 'helm) ← provoque des soucis avec projectile quand on veut switcher de projet
-(setq projectile-remember-window-configs t)
+;(setq projectile-remember-window-configs t)
 ;(setq projectile-switch-project-action 'projectile-dired)
 ;; flx-ido looks better with ido-vertical-mode
 
 
-;(require 'tabbar-ruler)
+;(use-package tabbar-ruler)
 ;(tabbar-ruler-group-by-projectile-project)
 ;(global-set-key (kbd "C-<left>") 'tabbar-ruler-backward)
 ;(global-set-key (kbd "C-<right>") 'tabbar-ruler-forward)
 
-(require 'ido-vertical-mode)
-(ido-vertical-mode)
+
+(use-package ido
+  :init (ido-mode)
+  (use-package ido-ubiquitous
+    :init
+    (ido-mode 1)
+    (ido-ubiquitous-mode))
+  (use-package flx-ido
+    :init (flx-ido-mode)
+    :config (setq flx-ido-use-faces nil))
+  (use-package ido-vertical-mode
+    :init (ido-vertical-mode)
+    :config
+    (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right))
+  :config
+  (setq ido-cannot-complete-command 'exit-minibuffer
+        ido-use-virtual-buffers t
+        ido-auto-merge-delay-time 2
+        ido-create-new-buffer 'always))
 
 
-(defun sd/ido-define-keys () ;; C-n/p is more intuitive in vertical layout
-  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "<down>") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
-  (define-key ido-completion-map (kbd "<up>") 'ido-prev-match))
+;;;;(defun sd/ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+;;;;  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+;;;;  (define-key ido-completion-map (kbd "<down>") 'ido-next-match)
+;;;;  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match)
+;;;;  (define-key ido-completion-map (kbd "<up>") 'ido-prev-match))
 
 ;; Use ido everywhere
-(require 'ido-ubiquitous)
-(ido-ubiquitous-mode 1)
+;(use-package ido-ubiquitous)
+;(ido-ubiquitous-mode 1)
 
-
-(add-to-list 'load-path "/home/goneri/.emacs.d/modules/magit-gerrit")
-(require 'magit-gerrit)
-(setq-default magit-gerrit-ssh-creds "goneri.lebouder@enovance.com")
 
 (autoload 'gnus-alias-determine-identity "gnus-alias" "" t)
 (add-hook 'message-setup-hook 'gnus-alias-determine-identity)
 
-(require 'gnus-alias)
+(use-package gnus-alias)
 (gnus-alias-init)
 (add-hook 'message-load-hook 'gnus-alias-select-identity)
 (setq gnus-alias-verbosity                              9
@@ -281,9 +459,16 @@
          nil ;; No extra headers
          nil ;; No extra body text
          "~/.signature")
-        ("work"
+        ("enovance"
          nil
          "Gonéri Le Bouder <goneri.lebouder@enovance.com>"
+         nil ;; "eNovance"
+         nil ;; (("Fcc" . "/home/goneri/Maildir/enovance/sent")) ;;
+         nil
+         "~/.signature")
+        ("redhat"
+         nil
+         "Gonéri Le Bouder <goneri@redhat.com>"
          nil ;; "eNovance"
          nil ;; (("Fcc" . "/home/goneri/Maildir/enovance/sent")) ;;
          nil
@@ -293,19 +478,13 @@
 ;;;;; Define rules to match work identity
 (setq gnus-alias-identity-rules
       '(
-       ("work" ("any" ".*enovance\\.com.*" both) "work")
-       ("work" ("any" ".*redhat\\.com.*" both) "work")
+       ("enovance" ("any" ".*enovance\\.com.*" both) "enovance")
+       ("enovance" ("any" ".*redhat\\.com.*" both) "enovance")
        ("debian" ("any" "debian\\.org" both) "debian" )
        )
 )
 ; Determine identity when message-mode loads
 (add-hook 'message-setup-hook 'gnus-alias-determine-identity)
-
-
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells) ;; if you want interactive shell support
-;;(venv-initialize-eshell) ;; if you want eshell support
-(setq venv-location "/home/goneri/py27/")
 
 
 ;; fontify the whole line for headings (with a background color)
@@ -320,10 +499,13 @@
 (setq x-select-enable-primary t)
 
 ;(add-to-list 'load-path "/home/goneri/.emacs.d/modules/google-contacts.el")
-;(require 'google-contacts)
-;(require 'google-contacts-message)
+;(use-package google-contacts)
+;(use-package google-contacts-message)
 
-(setq-default display-buffer-reuse-frames t)
+(setq-default display-buffer-reuse-frames t
+              cursor-type 'bar
+              cursor-in-non-selected-windows nil
+)
 
 
 (defun notmuch-show-copy-gerrit-entry-url ()
@@ -339,7 +521,7 @@
               (message "Opening url: %s" url)))
         (if (string-match "Subject: Bug#\\([0-9]+\\): " raw)
             (let ((bug_id (match-string 1 raw)))
-	      (browse-url (format "http://bugs.debian.org/%s" bug_id))
+          (browse-url (format "http://bugs.debian.org/%s" bug_id))
               (message "Opening url: http://bugs.debian.org/%s" bug_id)))
 
 ;        (if (string-match "X-Gerrit-ChangeURL: <\\(.*\\)>" raw)
@@ -363,32 +545,37 @@
   (if (message-mail-p)
     (save-excursion
       (let* ((from
-	       (save-restriction
-		 (message-narrow-to-headers)
-		 (message-fetch-field "from")))
-	     (account
-	       (cond
-		 ;; I use email address as account label in ~/.msmtprc
-		 ((string-match "goneri@lebouder.net" from)"goneri@lebouder.net")
-		 ((string-match "goneri@redhat.com" from)"goneri@redhat.com")
-		 ((string-match "goneri@debian.org" from)"goneri@debian.org")
-		 ;; Add more string-match lines for your email accounts
-		 ((string-match "goneri.lebouder@enovance.com" from)"goneri.lebouder@enovance.com"))))
-	(setq message-sendmail-extra-arguments (list '"-a" account)))))) ; the original form of this script did not have the ' before "a" which causes a very difficult to track bug --frozencemetery
+           (save-restriction
+         (message-narrow-to-headers)
+         (message-fetch-field "from")))
+         (account
+           (cond
+         ;; I use email address as account label in ~/.msmtprc
+         ((string-match "goneri@lebouder.net" from)"goneri@lebouder.net")
+         ((string-match "goneri@redhat.com" from)"goneri@redhat.com")
+         ((string-match "goneri@debian.org" from)"goneri@debian.org")
+         ((string-match "goneri@rulezlan.org" from)"goneri@rulezlan.org")
+         ;; Add more string-match lines for your email accounts
+         ((string-match "goneri.lebouder@enovance.com" from)"goneri.lebouder@enovance.com"))))
+    (setq message-sendmail-extra-arguments (list '"-a" account)))))) ; the original form of this script did not have the ' before "a" which causes a very difficult to track bug --frozencemetery
 
 (setq message-sendmail-envelope-from 'header)
 (add-hook 'message-send-mail-hook 'cg-feed-msmtp)
 ;(setq message-sendmail-extra-arguments '("--read-envelope-from"))
 
 ;(add-to-list 'load-path "/home/goneri/.emacs.d/modules/elfeed")
-;(require 'elfeed)
+;(use-package elfeed)
 
 ;(add-to-list 'load-path "/home/goneri/.emacs.d/modules/twittering-mode")
-;(require 'twittering-mode)
+;(use-package twittering-mode)
 
-(require 'nyan-mode)
-(nyan-mode 1)
-(nyan-start-animation)
+; broken with the new powerline
+(use-package nyan-mode
+  :init
+  (nyan-mode 1)
+  :config
+  (nyan-start-animation)
+)
 
 ; Font mono
 ;(variable-pitch-mode 1)
@@ -410,13 +597,20 @@
 
 ;(load-theme 'soft-morning t)
 
-(load-theme 'tango-plus t)
 ;(load-theme 'leuven t)  # Tres simple avec fond clair
 
-;(load-theme 'moe-light t)
 ;(load-theme 'moe-dark t)
-;(require 'bash-completion)
+;(use-package bash-completion)
 ;(bash-completion-setup)
+
+
+;(load-theme 'occidental t)
+(use-package moe-theme)
+(moe-light)
+(setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
+(setq moe-theme-resize-org-title '(2.2 1.8 1.6 1.4 1.2 1.0 1.0 1.0 1.0))
+(setq moe-theme-resize-rst-title '(2.0 1.7 1.5 1.3 1.1 1.0))
+(use-package moe-theme-switcher)
 
 (savehist-mode 1)
 ;; save history between sessions
@@ -437,17 +631,16 @@
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
 
-(global-set-key (kbd "<f10>") 'kill-buffer)
 (global-set-key (kbd "<f11>") 'magit-status)
 (global-set-key (kbd "<f12>") 'projectile-switch-project)
-;(global-st-key (kbd "<f9>") 'sphinx-doc)
+(global-set-key (kbd "<f2>") 'projectile-compile-project)
 
 ;(notmuch-show-insert-text/plain-hook (quote (notmuch-wash-convert-inline-patch-to-part notmuch-wash-wrap-long-lines notmuch-wash-tidy-citations notmuch-wash-elide-blank-lines notmuch-wash-excerpt-citations)))
 
 (autoload 'smex "smex")
 (global-set-key (kbd "M-x") 'smex)
 
-(require 'recentf)
+(use-package recentf)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 
@@ -456,10 +649,10 @@
 (add-to-list 'load-path "/home/goneri/tern/emacs")
 (autoload 'tern-mode "tern.el" nil t)
 (add-hook 'js-mode-hook (lambda () (tern-mode t)))
-(eval-after-load 'tern
-   '(progn
-      (require 'tern-auto-complete)
-      (tern-ac-setup)))
+;elpy(eval-after-load 'tern
+;elpy   '(progn
+;elpy      (use-package tern-auto-complete)
+;elpy      (tern-ac-setup)))
 ; https://github.com/songuo/emacs24-songguo/blob/a9516d1eef76f8cbf57162ff73cabe755c2171ea/songuo-shell.el
 ;; Include the following only if you want to run
 ;; bash as your shell.
@@ -470,7 +663,20 @@
 (setenv "SHELL" shell-file-name)
 (setq explicit-sh-args '("-login" "-i"))
 
-(add-hook 'prog-mode-hook (lambda () (git-gutter-mode t)))
+;elpy(setq indent-tabs-mode nil)
+;elpy(add-hook 'prog-mode-hook (lambda ()
+;elpy                                (setq whitespace-line-column 80)
+;elpy                                (whitespace-mode t)
+;elpy                                (setq whitespace-style '(face trailing lines-tail tabs space-before-tab))
+;elpy                                (use-package git-gutter-mode)
+;elpy                (setq git-gutter-mode t)
+;elpy                                (setq indent-tabs-mode nil)
+;elpy                               ))
+(add-hook 'sh-mode-hook (lambda ()
+        (use-package auto-complete)
+        (auto-complete-mode)
+        (setq sh-basic-offset 4)
+        (setq indent-tabs-mode nil)))
 
 
 ;; Find → C-f
@@ -481,7 +687,7 @@
 ;  pip install pycscope
 ;  # in project base dir:
 ; find . -name '*.py' > cscope.files
-(require 'xcscope)
+(use-package xcscope)
 (cscope-minor-mode)
 
 ; match pep257 error
@@ -490,7 +696,7 @@
   '("^\\(.+\\):\\([0-9]+\\) in " 1 2))
 
 ; https://github.com/benma/visual-regexp-steroids.el/
-(require 'visual-regexp-steroids)
+(use-package visual-regexp-steroids)
 ; (define-key global-map (kbd "C-c r") 'vr/replace)
 ; (define-key global-map (kbd "C-c q") 'vr/query-replace)
 ;; if you use multiple-cursors, this is for you:
@@ -508,7 +714,7 @@
     (concat dirname (file-name-nondirectory FILE))))
 
 ; elpy https://github.com/jorgenschaefer/elpy
-;(require 'package)
+;(use-package package)
 ;(add-to-list 'package-archives
 ;             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
@@ -539,39 +745,44 @@
 ; http://www.emacswiki.org/emacs/WindMove
 (windmove-default-keybindings 'meta)
 
-(require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background nil :family "Fantasque Sans Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(highlight-indentation-current-column-face ((t (:background "pink1"))) t)
- '(highlight-indentation-face ((t (:background "snow2"))) t)
+ '(default ((t (:background nil :family "Fantasque Sans Mono" :foundry "unknown" :slant normal :weight normal :height 120 :width normal))))
+ '(highlight-indentation-current-column-face ((t (:background "pink1"))))
+ '(highlight-indentation-face ((t (:background "snow2"))))
  '(notmuch-crypto-part-header ((t (:foreground "burlywood"))))
- '(notmuch-message-summary-face ((t (:background "pink"))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#7f8c8d")))))
+ '(notmuch-message-summary-face ((t (:background "pink")))))
 
 ; http://superuser.com/questions/555034/double-mouse-1-selects-text-and-symbol-in-emacs
 (modify-syntax-entry ?_ "w")
 
-(require 'yasnippet)
-(setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"                 ;; personal snippets
-))
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-(define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
-(yas-global-mode 1)
+;(use-package yasnippet)
+;(setq yas-snippet-dirs
+;      '("~/.emacs.d/snippets"                 ;; personal snippets
+;))
+;(define-key yas-minor-mode-map (kbd "<tab>") nil)
+;(define-key yas-minor-mode-map (kbd "TAB") nil)
+;(define-key yas-minor-mode-map (kbd "<f3>") 'yas-expand)
+;(yas-global-mode 1)
 
 ; http://stackoverflow.com/questions/3072648/cucumbers-ansi-colors-messing-up-emacs-compilation-buffer
-(require 'ansi-color)
+(use-package ansi-color)
 (defun colorize-compilation-buffer ()
   (toggle-read-only)
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
+;(use-package gh-pulls)
+;(use-package magit-gh-pulls)
+;(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+
+(setq multi-term-program "/usr/bin/fish")
+;(when (featurep 'python) (unload-feature 'python t)) 
+
+(use-package swiper)
 
 (provide '.emacs)
