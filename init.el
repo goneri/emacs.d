@@ -172,8 +172,6 @@
         projectile-tags-command "ripper-tags -R -f TAGS")
   :init
   (projectile-global-mode)
-  (use-package projectile-rails
-    :init (add-hook 'projectile-mode-hook #'projectile-rails-on)))
 
 (use-package helm-swoop
   :bind ("s-f" . helm-swoop)
