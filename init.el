@@ -165,13 +165,12 @@
   (setq ajb-home-row-keys t))
 
 (use-package projectile
-  :bind-keymap (("s-O" . projectile-command-map))
   :idle (projectile-cleanup-known-projects)
   :config
   (setq projectile-enable-caching t
         projectile-tags-command "ripper-tags -R -f TAGS")
   :init
-  (projectile-global-mode)
+  (projectile-global-mode))
 
 (use-package helm-swoop
   :bind ("s-f" . helm-swoop)
