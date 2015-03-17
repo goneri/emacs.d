@@ -73,7 +73,6 @@
 (depends-on "pallet")
 (depends-on "powerline" :git "https://github.com/unic0rn/powerline.git")
 (depends-on "projectile")
-(depends-on "projectile-ack")
 (depends-on "projector")
 (depends-on "puppet")
 (depends-on "puppet-mode")
